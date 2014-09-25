@@ -1,8 +1,4 @@
 /*
- * 9/18 - Need to double check win checking and random turn start
- */
-
-/*
  *	Game manager class.  Handles all main game execution.
  */
 
@@ -32,8 +28,10 @@ void GameManager::initGame()
 	_board.setUpBoard();
 
 	// Set starting turn.
-	// TODO: start with random turn
-	setTurn(0);
+	std::mt19937 randomGenerator(time(0));
+	std::uniform_int_distribution<int> startPlayer(1, getNumberOfPlayers());
+
+	setTurn(startPlayer(randomGenerator));
 
 	// Run the game.
 	runGame();
@@ -117,7 +115,7 @@ bool GameManager::isGameWon()
 	{
 		for (int x = 0; x < _board.getXMax(); x++)
 		{
-			if (_board.getValue(x, y) == _players[getTurn() % getNumberOfPlayers()].getToken())
+			if (_board.getValue(x, y) == _players[(getTurn() - 1) % getNumberOfPlayers()].getToken())
 			{
 				// Test if there are any of the same tokens immediately adjactent to that token
 				// if so, test to see if there is another token in that same direction
@@ -259,8 +257,6 @@ void GameManager::runGame()
 
 		// Get the player's move.
 		_board.move(_players[getTurn() % getNumberOfPlayers()].getToken());
-
-		/* THIS MAY BE WHERE THE END OF GAME BUG OCCURS.  CONSIDER MOVING CHANGING TURN TO THE START OF THE LOOP. */
 
 		// Change the turn for the next turn.
 		setTurn(getTurn() + 1);

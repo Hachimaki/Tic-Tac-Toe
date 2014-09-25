@@ -1,6 +1,8 @@
 #pragma once
 
+#include <ctime>
 #include <iostream>
+#include <random>
 #include <string>
 
 #include "Board.h"
