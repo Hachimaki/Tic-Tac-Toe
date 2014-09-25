@@ -1,3 +1,5 @@
+// 9/25 - End game is broken somewhat.  As is currently written, on a 3x3 board, ends after 6 moves and threw cat game on an obvious win.  Check both.
+
 /*
  *	Game manager class.  Handles all main game execution.
  */
@@ -115,7 +117,7 @@ bool GameManager::isGameWon()
 	{
 		for (int x = 0; x < _board.getXMax(); x++)
 		{
-			if (_board.getValue(x, y) == _players[(getTurn() - 1) % getNumberOfPlayers()].getToken())
+			if (_board.getValue(x, y) == _players[(getTurn()) % getNumberOfPlayers()].getToken())
 			{
 				// Test if there are any of the same tokens immediately adjactent to that token
 				// if so, test to see if there is another token in that same direction
